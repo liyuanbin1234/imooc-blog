@@ -1,7 +1,7 @@
 <template>
 	<view class="hot-container">
 		<image class="logo" src="@/static/images/logo.png" mode="aspectFit"></image>
-		<view class="search-box">
+		<view class="search-box" @click="onToSearch">
 			<my-search placeholderText="uni-app 自定义组件"></my-search>
 		</view>
 		<view class="tab-sticky">
@@ -102,6 +102,9 @@
 					})
 				}
 				this.currentIndex = e.detail.current;
+			},
+			onToSearch() {
+				uni.navigateTo({ url: '/subpkg/pages/search-blog/search-blog' })
 			}
 		}
 	}
