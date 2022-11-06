@@ -12,6 +12,13 @@
   -webkit-line-clamp: 2;
 }
 
+// 单行超出显示省略号
+.line-clamp{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
  // 卡片视图
  .card {
    border: 1px solid #f9f9f9;

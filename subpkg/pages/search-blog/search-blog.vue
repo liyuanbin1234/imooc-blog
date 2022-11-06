@@ -8,11 +8,12 @@
 		</view>
 		<!-- 热搜列表 -->
 		<view class="search-hot-list-box card" v-if="showType === SEARCH_HOT_LIST">
-			<search-hot-list></search-hot-list>
+			<search-hot-list @onSearch="onSearchConfirm"></search-hot-list>
 		</view>
 		<!-- 搜索历史 -->
 		<view class="search-history-box" v-else-if="showType === SEARCH_HISTORY">
-			<search-history></search-history>
+			<search-history :searchData="searchData" @removeAllSearchData="onRemoveAllSearchData"
+				@removeSearchData="onRemoveSearchData" @onSearch="onSearchConfirm"></search-history>
 		</view>
 		<!-- 搜索结果 -->
 		<view class="search-result-list-box" v-else>
@@ -42,7 +43,8 @@
 				SEARCH_HISTORY,
 				// 用户点击热搜列表 item || 用户点击搜索历史 item || 用户按下搜索按钮时，展示【搜索结果】
 				SEARCH_RESULT,
-				showType: SEARCH_HOT_LIST
+				showType: SEARCH_HOT_LIST,
+				searchData: []
 			};
 		},
 		created() {
@@ -52,9 +54,23 @@
 			// 搜索按钮
 			onSearchConfirm(val) {
 				this.searchVal = val ? val : this.defaultText
+				this.saveSearchData()
 				if (this.searchVal) {
 					this.showType = SEARCH_RESULT
 				}
+			},
+			saveSearchData() {
+				const index = this.searchData.findIndex(item => item === this.searchVal)
+				if (index !== -1) {
+					this.searchData.splice(index, 1)
+				}
+				this.searchData.unshift(this.searchVal)
+			},
+			onRemoveAllSearchData() {
+				this.searchData = []
+			},
+			onRemoveSearchData(index) {
+				this.searchData.splice(index, 1)
 			},
 			// 获取焦点
 			onSearchFocus(val) {
