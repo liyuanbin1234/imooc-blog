@@ -26,20 +26,22 @@
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 	export default {
 		name: "search-history",
-		props: {
-			searchData: {
-				type: Array,
-				required: true
-			}
-		},
 		data() {
 			return {
 				isShowClear: false
 			};
 		},
+		computed: {
+			...mapState('search', ['searchData'])
+		},
 		methods: {
+			...mapMutations('search', ['removeSearchData', 'removeAllSearchData']),
 			clearAllSearchData() {
 				uni.showModal({
 					title: '提示',
@@ -51,14 +53,14 @@
 					}) => {
 						if (confirm) {
 							this.isShowClear = false;
-							this.$emit('removeAllSearchData')
+							this.removeAllSearchData()
 						}
 					}
 				})
 			},
 			onHistoryItemClick(item, index) {
 				if (this.isShowClear) {
-					this.$emit('removeSearchData', index)
+					this.removeSearchData(index)
 				} else {
 					this.$emit('onSearch', item)
 				}

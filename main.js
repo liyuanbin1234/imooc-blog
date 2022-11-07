@@ -3,6 +3,8 @@ import Vue from 'vue'
 import App from './App'
 // 通用样式
 import './styles/global.scss';
+// 导入store
+import store from '@/store/index.js';
 
 // 引入全局filter
 import * as filters from './filters/index.js';
@@ -15,7 +17,8 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 const app = new Vue({
-	...App
+	...App,
+	store
 })
 app.$mount()
 // #endif
