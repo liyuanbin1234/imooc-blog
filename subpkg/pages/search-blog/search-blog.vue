@@ -16,12 +16,13 @@
 		</view>
 		<!-- 搜索结果 -->
 		<view class="search-result-list-box" v-else>
-			<search-result-list></search-result-list>
+			<search-result-list ref="mescrollItem" :queryStr="searchVal"></search-result-list>
 		</view>
 	</view>
 </template>
 
 <script>
+	import MescrollCompMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-comp.js';
 	import {
 		mapMutations
 	} from 'vuex';
@@ -48,6 +49,7 @@
 				showType: SEARCH_HOT_LIST
 			};
 		},
+		mixins: [MescrollCompMixin],
 		created() {
 			this.loadDefaultText()
 		},

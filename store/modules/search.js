@@ -1,4 +1,5 @@
-const STORAGE_KEY = 'search-list'
+const STORAGE_KEY = 'search-list';
+const HISTORY_MAX = 10;
 export default {
 	namespaced: true,
 	state: () => {
@@ -22,6 +23,10 @@ export default {
 				state.searchData.splice(index, 1)
 			}
 			state.searchData.unshift(val)
+			if (state.searchData.length > HISTORY_MAX) {
+				// state.searchData.length = HISTORY_MAX
+				state.searchData.splice(HISTORY_MAX, state.searchData.length - HISTORY_MAX)
+			}
 			this.commit('search/saveToStorage')
 		},
 		// 删除指定搜索历史

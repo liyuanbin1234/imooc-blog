@@ -17,3 +17,13 @@ export function getSearchHotList() {
 		url: "/search/hot-list"
 	})
 }
+
+/**
+ * 获取搜索结果
+ */
+export function getSearchResult(data) {
+	return request({
+		url: '/search',
+		data
+	})
+}
