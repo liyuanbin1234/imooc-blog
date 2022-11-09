@@ -8,18 +8,16 @@
 			<my-tabs :tabsData="tabsData" :defaultIndex="currentIndex" @tabClick="onTabClick"></my-tabs>
 		</view>
 		<!-- list -->
-		<swiper 
-			class="swiper" 
-			:current="currentIndex" 
-			:style="{height: currentSwiperHeight + 'px'}"
-			@animationfinish="onSwiperEnd" 
-			@change="onSwiperChange">
+		<swiper class="swiper" :current="currentIndex" :style="{height: currentSwiperHeight + 'px'}"
+			@animationfinish="onSwiperEnd" @change="onSwiperChange">
 			<swiper-item class="swiper-item" v-for="(tabItem, tabIndex) in tabsData" :key="tabIndex">
 				<view>
 					<uni-load-more status="loading" v-if="isLoading"></uni-load-more>
 					<block v-else>
+						<!-- 父组件在子组件标签上使用 @click 绑定事件，必须在 子组件中 最外层标签上 添加 @click="$emit('click')"， 否则 无效 -->
 						<hot-list-item v-for="(item, index) in listData[tabIndex]" :key="index" :data="item"
-							:ranking="index+1" :class="'hot-list-item-' + tabIndex"></hot-list-item>
+							:ranking="index+1" :class="'hot-list-item-' + tabIndex" @click="onItemClick(item)">
+						</hot-list-item>
 					</block>
 				</view>
 			</swiper-item>
@@ -104,7 +102,14 @@
 				this.currentIndex = e.detail.current;
 			},
 			onToSearch() {
-				uni.navigateTo({ url: '/subpkg/pages/search-blog/search-blog' })
+				uni.navigateTo({
+					url: '/subpkg/pages/search-blog/search-blog'
+				})
+			},
+			onItemClick(item) {
+				uni.navigateTo({
+					url: `/subpkg/pages/blog-detail/blog-detail?author=${item.user_name}&articleId=${item.id}`
+				})
 			}
 		}
 	}

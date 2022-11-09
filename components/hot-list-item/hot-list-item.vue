@@ -1,5 +1,6 @@
 <template>
-	<view class="item-container">
+	<!-- 父组件在子组件标签上使用 @click 绑定事件，必须在 子组件中 最外层标签上 添加 @click="$emit('click')"， 否则 无效 -->
+	<view class="item-container" @click="$emit('click')">
 		<view class="item-box">
 			<!-- 左侧 -->
 			<view class="item-box-left">

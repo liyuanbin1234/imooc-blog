@@ -31,6 +31,11 @@ function request({
 			},
 			fail: (error) => {
 				reject(error)
+			},
+			// 完成回调：无论成功还是失败都会执行
+			complete: () => {
+				// 关闭加载框
+				uni.hideLoading()
 			}
 		})
 	})

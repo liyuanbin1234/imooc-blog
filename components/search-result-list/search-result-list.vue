@@ -3,7 +3,7 @@
 		<empty-data v-if="isEmpty"></empty-data>
 		<mescroll-body v-else ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback">
 			<block v-for="(item, index) in resultList" :key="index">
-				<view class="search-result-item-box">
+				<view class="search-result-item-box" @click="onItemClick(item)">
 					<search-result-item-theme-1 v-if="!item.pic_list || item.pic_list.length === 0" :data="item" />
 					<search-result-item-theme-2 v-else-if="item.pic_list.length === 1" :data="item" />
 					<search-result-item-theme-3 v-else :data="item" />
@@ -72,8 +72,11 @@
 				// 搜索关键字高亮
 				res.list.forEach((item, index) => {
 					item.title = item.title.replace(/<em>/g, "<em style='color:#f94d2a;margin:0 2px;'>");
-					item.description = item.description.replace(/<em>/g,
-						"<em style='color:#f94d2a;margin:0 2px;'>");
+					
+					if (item.description) {
+						item.description = item.description.replace(/<em>/g,
+							"<em style='color:#f94d2a;margin:0 2px;'>");
+					}
 				})
 
 				if (this.page === 1) {
@@ -83,11 +86,16 @@
 					// 上拉加载赋值
 					this.resultList = [...this.resultList, ...res.list];
 				}
-				
+
 				// 判断是否展示空数据组件
 				if (this.resultList.length === 0) {
 					this.isEmpty = true;
 				}
+			},
+			onItemClick(item) {
+				uni.navigateTo({
+					url: `/subpkg/pages/blog-detail/blog-detail?author=${item.author}&articleId=${item.id}`
+				})
 			}
 		}
 	}
