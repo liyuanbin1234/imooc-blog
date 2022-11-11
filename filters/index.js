@@ -14,7 +14,7 @@ dayjs.extend(rTime);
  * 6. 定义过滤器，通过 dayjs().to(dayjs(val)) 方法把【当前时间】处理为【相对时间】
  */
 export function relativeTime(val) {
-  return dayjs().to(dayjs(val));
+	return dayjs().to(dayjs(val));
 }
 
 /**

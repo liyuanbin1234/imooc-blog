@@ -20,62 +20,62 @@
 </template>
 
 <script>
-	export default {
-		name: 'search-result-item-theme-2',
-		props: {
-			data: {
-				type: Object,
-				required: true
-			}
-		},
-		data: () => ({})
-	};
+export default {
+	name: 'search-result-item-theme-2',
+	props: {
+		data: {
+			type: Object,
+			required: true
+		}
+	},
+	data: () => ({})
+};
 </script>
 
 <style lang="scss" scoped>
-	.search-result-item-box {
-		margin-bottom: $uni-spacing-col-big;
+.search-result-item-box {
+	margin-bottom: $uni-spacing-col-big;
 
-		// 标题
-		.item-title {
+	// 标题
+	.item-title {
+		font-size: $uni-font-size-base;
+		font-weight: bold;
+		color: $uni-text-color-title;
+	}
+
+	.item-info-box {
+		display: flex;
+		margin-top: $uni-spacing-col-base;
+
+		.item-desc-box {
+			width: 65%;
 			font-size: $uni-font-size-base;
-			font-weight: bold;
-			color: $uni-text-color-title;
-		}
+			color: $uni-color-subtitle;
 
-		.item-info-box {
-			display: flex;
-			margin-top: $uni-spacing-col-base;
+			// 底部作者 + 阅读量
+			.item-desc-bottom {
+				margin-top: $uni-spacing-col-base;
+				display: flex;
+				color: $uni-text-color-grey;
+				font-size: $uni-font-size-sm;
 
-			.item-desc-box {
-				width: 65%;
-				font-size: $uni-font-size-base;
-				color: $uni-color-subtitle;
+				.item-author {
+					margin-right: $uni-spacing-row-lg;
+				}
 
-				// 底部作者 + 阅读量
-				.item-desc-bottom {
-					margin-top: $uni-spacing-col-base;
-					display: flex;
-					color: $uni-text-color-grey;
-					font-size: $uni-font-size-sm;
-
-					.item-author {
-						margin-right: $uni-spacing-row-lg;
-					}
-
-					.item-read-num {
-						.read-num-icon {
-							color: $uni-text-color-grey;
-							margin-right: $uni-spacing-row-sm;
-						}
+				.item-read-num {
+					.read-num-icon {
+						color: $uni-text-color-grey;
+						margin-right: $uni-spacing-row-sm;
 					}
 				}
 			}
+		}
 
-			.item-img {
-				width: 33%;
-				height: 70px;
-			}
+		.item-img {
+			width: 33%;
+			height: 70px;
 		}
 	}
+}
 </style>
