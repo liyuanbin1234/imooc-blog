@@ -21,7 +21,7 @@
 					</view>
 					<view class="detail-right">
 						<!-- 关注按钮 -->
-						<button class="follow" size="mini">关注</button>
+						<button class="follow" size="mini" @click="onFollowClick">关注</button>
 					</view>
 				</view>
 				<!-- 文章内容 -->
@@ -41,6 +41,7 @@
 <script>
 import MescrollCompMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-comp.js';
 import { getArticleDetail } from '@/api/article.js';
+import { mapActions } from 'vuex';
 export default {
 	data() {
 		return {
@@ -56,6 +57,7 @@ export default {
 		this.loadArticleDetail();
 	},
 	methods: {
+		...mapActions('user', ['isLogin']),
 		addClassFromHTML(info) {
 			return info
 				.replace(/<p>/gi, '<p class="p-cls">')
@@ -95,6 +97,10 @@ export default {
 				articleId: this.articleId
 			});
 			this.articleData = res.data;
+		},
+		async onFollowClick() {
+			const isLogin = await this.isLogin();
+			if (!isLogin) return;
 		}
 	}
 };

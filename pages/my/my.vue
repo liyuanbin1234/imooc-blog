@@ -1,19 +1,16 @@
 <template>
-	<view>
-		
-	</view>
+	<my-login></my-login>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				
-			};
-		}
+export default {
+	name: 'my-login',
+	data() {
+		return {};
 	}
+};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>
