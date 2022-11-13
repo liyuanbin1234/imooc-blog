@@ -1,6 +1,6 @@
 <template>
 	<view class="praise-box">
-		<image class="img" src="/static/images/un-praise.png" />
+		<image class="img" :src="icon" />
 		<text class="txt">点赞</text>
 	</view>
 </template>
@@ -10,6 +10,17 @@ export default {
 	name: 'article-praise',
 	data() {
 		return {};
+	},
+	computed: {
+		icon() {
+			return this.isPraise ? '/static/images/praise.png' : '/static/images/un-praise.png';
+		}
+	},
+	props: {
+		isPraise: {
+			type: Boolean,
+			required: true
+		}
 	}
 };
 </script>

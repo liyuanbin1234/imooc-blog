@@ -1,5 +1,5 @@
+import store from '@/store/index.js';
 // 封装网络请求
-
 const BASE_URL = 'https://api.imooc-blog.lgdsunday.club/api';
 
 function request({
@@ -12,6 +12,10 @@ function request({
 			url: BASE_URL + url,
 			data,
 			method,
+			header: {
+				Authorization: store.state.user.token,
+				icode: '4A5155094CC44C7E'
+			},
 			success: ({
 				data,
 				statusCode,

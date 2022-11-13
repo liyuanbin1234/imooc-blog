@@ -95,6 +95,13 @@ export default {
 		},
 		onMoreClick() {
 			this.showAllCommentList = true;
+		},
+		/**
+		 * @param {Object} data:评论项
+		 * 为 commentList 增加评论项
+		 */
+		addCommentList(data) {
+			this.commentList.unshift(data);
 		}
 	}
 };

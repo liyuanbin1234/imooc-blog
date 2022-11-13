@@ -1,6 +1,6 @@
 <template>
 	<view class="collect-box">
-		<image class="img" src="/static/images/un-collect.png" />
+		<image class="img" :src="icon" />
 		<text class="txt">收藏</text>
 	</view>
 </template>
@@ -10,6 +10,17 @@ export default {
 	name: 'article-collect',
 	data() {
 		return {};
+	},
+	props: {
+		isCollect: {
+			type: Boolean,
+			required: true
+		}
+	},
+	computed: {
+		icon() {
+			return this.isCollect ? '/static/images/collect.png' : '/static/images/un-collect.png';
+		}
 	}
 };
 </script>

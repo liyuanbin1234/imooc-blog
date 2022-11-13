@@ -21,7 +21,15 @@
 					</view>
 					<view class="detail-right">
 						<!-- 关注按钮 -->
-						<button class="follow" size="mini" @click="onFollowClick">关注</button>
+						<button
+							class="follow"
+							size="mini"
+							:loading="isFollowLoading"
+							:type="articleData.isFollow ? 'primary' : 'default'"
+							@click="onFollowClick"
+						>
+							关注
+						</button>
 					</view>
 				</view>
 				<!-- 文章内容 -->
@@ -33,7 +41,22 @@
 				</view>
 			</block>
 			<!-- 底部功能 -->
-			<article-operate></article-operate>
+			<block v-if="articleData">
+				<article-operate
+					@commentClick="onComment"
+					:articleData="articleData"
+					@praiseChange="onPraiseChange"
+					@collectChange="onCollectChange"
+				></article-operate>
+			</block>
+			<!-- 底部弹出框 -->
+			<uni-popup ref="popup" type="bottom" @change="onCommentPopupChange">
+				<article-comment-commit
+					v-if="isShowComment"
+					:articleId="articleId"
+					@success="onCommentSuccess"
+				></article-comment-commit>
+			</uni-popup>
 		</view>
 	</page-meta>
 </template>
@@ -42,12 +65,15 @@
 import MescrollCompMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-comp.js';
 import { getArticleDetail } from '@/api/article.js';
 import { mapActions } from 'vuex';
+import { userFollow } from '@/api/user.js';
 export default {
 	data() {
 		return {
 			author: '',
 			articleId: '',
-			articleData: null
+			articleData: null,
+			isFollowLoading: false,
+			isShowComment: false
 		};
 	},
 	mixins: [MescrollCompMixin],
@@ -101,6 +127,36 @@ export default {
 		async onFollowClick() {
 			const isLogin = await this.isLogin();
 			if (!isLogin) return;
+
+			this.isFollowLoading = true;
+			await userFollow({
+				author: this.author,
+				isFollow: !this.articleData.isFollow
+			});
+			this.articleData.isFollow = !this.articleData.isFollow;
+			this.isFollowLoading = false;
+		},
+		onComment() {
+			this.$refs.popup.open();
+		},
+		onCommentPopupChange(e) {
+			if (e.show) {
+				this.isShowComment = e.show;
+			} else {
+				setTimeout(() => {
+					this.isShowComment = e.show;
+				}, 200);
+			}
+		},
+		onCommentSuccess(data) {
+			this.$refs.popup.close();
+			this.$refs.mescrollItem.addCommentList(data);
+		},
+		onPraiseChange(isPraise) {
+			this.articleData.isPraise = isPraise;
+		},
+		onCollectChange(isCollect) {
+			this.articleData.isCollect = isCollect;
 		}
 	}
 };
