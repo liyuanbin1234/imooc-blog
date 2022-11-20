@@ -3,7 +3,7 @@
 		<!-- 输入框 -->
 		<view class="comment-box" @click="onCommentClick">
 			<my-search
-				placeholderText="评论一句，前排打call..."
+				:placeholderText="placeholder"
 				:config="{
 					height: 28,
 					backgroundColor: '#eeedf4',
@@ -32,6 +32,13 @@ export default {
 		articleData: {
 			type: Object,
 			required: true
+		},
+		placeholder: {
+			type: String,
+			default: '评论一句，前排打call...'
+		},
+		paremtModel: {
+			type: String
 		}
 	},
 	methods: {
@@ -52,6 +59,12 @@ export default {
 		async onPraiseClick() {
 			const login = await this.isLogin();
 			if (!login) return;
+			// video 的 点赞
+			if (this.paremtModel === 'video') {
+				this.$emit('praiseChange', !this.articleData.isPraise);
+				return;
+			}
+			// --
 			uni.showLoading({
 				title: '加载中'
 			});
@@ -61,13 +74,19 @@ export default {
 			});
 			this.$emit('praiseChange', !this.articleData.isPraise);
 		},
-		
+
 		/**
 		 * 收藏按钮点击事件
 		 */
 		async onCollectClick() {
 			const login = await this.isLogin();
 			if (!login) return;
+			// video 的收藏
+			if (this.paremtModel === 'video') {
+				this.$emit('collectChange', !this.articleData.isCollect);
+				return;
+			}
+			// --
 			uni.showLoading({
 				title: '加载中'
 			});

@@ -53,8 +53,11 @@
         "appid" : "wx4c74f850939f0530",
         "setting" : {
             "urlCheck" : false,
-						"checkSiteMap": false
+            "checkSiteMap" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "unipush" : {
+            "enable" : false
+        }
     }
 }
