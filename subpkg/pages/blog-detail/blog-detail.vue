@@ -1,5 +1,7 @@
 <template>
+	<!-- #ifndef H5 -->
 	<page-meta root-font-size="52px">
+	<!-- #endif -->
 		<view class="detail-container">
 			<!-- 文章内容区域 -->
 			<block v-if="articleData">
@@ -58,7 +60,9 @@
 				></article-comment-commit>
 			</uni-popup>
 		</view>
+	<!-- #ifndef H5 -->
 	</page-meta>
+	<!-- #endif -->
 </template>
 
 <script>
@@ -163,7 +167,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/styles/article-detail.scss';
 
 .detail-container {
 	padding: $uni-spacing-col-base $uni-spacing-row-base;

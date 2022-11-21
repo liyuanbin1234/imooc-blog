@@ -129,7 +129,13 @@ export default {
 	.tab-sticky {
 		position: sticky;
 		z-index: 99;
+		/* #ifndef H5 */
 		top: 0;
+		/* #endif */
+		
+		/* #ifdef H5 */
+		top: 44px;
+		/* #endif */
 	}
 }
 </style>

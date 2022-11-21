@@ -4,7 +4,12 @@
 		<block v-if="!token">
 			<image class="avatar avatar-img" src="/static/images/default-avatar.png" mode="scaleToFill" />
 			<view class="login-desc">登录后可同步数据</view>
+			<!-- #ifdef MP-WEIXIN -->
 			<button class="login-btn" type="primary" @click="getUserInfo">微信用户一键登录</button>
+			<!-- #endif -->
+			<!-- #ifndef MP-WEIXIN -->
+			<button class="login-btn" type="primary" @click="onAutoLogin">一键登录</button>
+			<!-- #endif -->
 		</block>
 		<block v-else>
 			<image class="avatar avatar-img" :src="userinfo.avatarUrl" mode="scaleToFill" />
@@ -17,7 +22,12 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 export default {
-	name: 'my-login',
+	/**
+	 * H5端 报错 【RangeError: Maximum call stack size exceeded】
+	 * 原因：子组件名称和父组件名称相同 引发调用死循环
+	 * 解决方案：修改【子组件名称||父组件名称】
+	 */
+	name: 'my-login-component',
 	data() {
 		return {};
 	},
@@ -28,7 +38,7 @@ export default {
 		...mapActions('user', ['login', 'logout']),
 
 		/**
-		 * 登陆按钮点击事件
+		 * 微信端 登陆按钮点击事件
 		 */
 		getUserInfo() {
 			// 展示加载框
@@ -72,6 +82,33 @@ export default {
 					}
 				}
 			});
+		},
+
+		/**
+		 * 非 微信端 一键登录
+		 */
+		async onAutoLogin() {
+			// 展示 loading
+			uni.showLoading({
+				title: '加载中',
+				mask: true
+			});
+
+			await this.login({
+				encryptedData: 'BmGEMqpGI5w',
+				errMsg: 'getUserProfile:ok',
+				iv: 'c+NbINO4CuEWCBYGG2FxWw==',
+				rawData:
+					'{"nickName":"小慕同学","gender":1,"language":"zh_CN","city":"","province":"","country":"China","avatarUrl":"https://m.imooc.com/static/wap/static/common/img/logo-small@2x.png"}',
+				signature: '449a10f11998daf680fe546a5176e6e2973516ce',
+				userInfo: { nickName: '小慕同学', gender: 1, language: 'zh_CN', city: '', province: '' }
+			});
+
+			// 用户登陆成功，发送成功回调
+			this.$emit('onLoginSuccess');
+
+			// 隐藏 loading
+			uni.hideLoading();
 		}
 	}
 };

@@ -3,6 +3,8 @@ import Vue from 'vue'
 import App from './App'
 // 通用样式
 import './styles/global.scss';
+// 文章详情样式
+import './styles/article-detail.scss';
 // 导入store
 import store from '@/store/index.js';
 

@@ -1,5 +1,5 @@
 <template>
-	<my-login @onLoginSuccess="onLoginSuccess"></my-login>
+	<my-login-component @onLoginSuccess="onLoginSuccess"></my-login-component>
 </template>
 
 <script>
